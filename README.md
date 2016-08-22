@@ -33,7 +33,7 @@ const app = require('express')();
 const expressApiRoutes = require('expressApiRoutes');
 
 // initialize with a config file
-expressApiRoutes({
+new expressApiRoutes({
 
   // Root directory
   root: __dirname, // defaults to process.mainModule.filename.dir
