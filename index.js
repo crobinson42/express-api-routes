@@ -24,7 +24,7 @@ class ExpressApiRoutes {
     this.config.app = setup.app || app;
     this.config.router = Router;
     this.config.global = setup.global || false;
-
+    this.config.routeMap = [] // for debug/loggging only
 
     // setup controllers
     new Controllers(this.config);
@@ -39,12 +39,17 @@ class ExpressApiRoutes {
     // console.log(`Controllers:`, this.config.controllers);
     // console.log(`Policies:`, this.config.policies);
     // console.log(`Routes:`, this.config.routes);
+    console.log('\n');
+    console.log('+++ ExpressApiRoutes');
+    this.config.routeMap.forEach(r=>{ console.log(`  ${this.config.baseRoute}/${r}`) })
+    console.log('\n');
+
 
     return this.config.app;
   }
 
 }
-//
+
 // const ourApp = new ExpressApiRoutes({
 //   root: __dirname, // defaults to process.mainFile.filename dir
 //   baseRoute: '/api/v1', // defaults to '/'
@@ -54,11 +59,10 @@ class ExpressApiRoutes {
 //   app: app, // creates an express app if none provided
 //   // global: myGlobalAppObj // none specified by default
 // });
-//
-// // This does not correctly parse the baseRoute
-// // https://github.com/AlbertoFdzM/express-list-endpoints/issues/10
-// // console.log(expressRoutes(app));
-//
 // app.listen(3002)
+
+// This does not correctly parse the baseRoute
+// https://github.com/AlbertoFdzM/express-list-endpoints/issues/10
+// console.log(expressRoutes(ourApp));
 
 module.exports = ExpressApiRoutes;

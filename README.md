@@ -8,10 +8,13 @@ All functions in the `controllers/myPath.js` will be available at the endpoint
 It also allows you to define policy "middleware" that is processed before the
 request gets to your endpoint.
 
+**Node v4**
+
+`npm install --save express-api-routes`
+
 
 TL;DR
 ======
-
 
 ```
 - controllers/
