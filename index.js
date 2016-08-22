@@ -35,6 +35,8 @@ class ExpressApiRoutes {
   }
 
   doWork() {
+    this.config.routeMap = [] // reset route map
+
     // setup controllers
     new Controllers(this.config);
     // setip policies
