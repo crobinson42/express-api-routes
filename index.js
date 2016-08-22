@@ -40,7 +40,7 @@ class ExpressApiRoutes {
     // console.log(`Routes:`, this.config.routes);
     console.log('\n');
     console.log('+++ ExpressApiRoutes');
-    this.config.routeMap.forEach(r=>{ console.log(`  ${this.config.baseRoute}/${r}`) })
+    this.config.routeMap.forEach(r=>{ console.log(`  ${this.config.baseRoute}${r}`) })
     console.log('\n');
 
 
