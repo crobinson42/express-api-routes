@@ -3,6 +3,6 @@ module.exports = {
     return res.ok('Woohoo!');
   },
   doSomething(req,res,next) {
-    return res.ok('Did somethings!!');
+    return res.send('Did somethings!!');
   }
 };

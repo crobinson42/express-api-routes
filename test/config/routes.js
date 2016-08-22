@@ -1,3 +1,3 @@
 module.exports = {
-  '/user/bam': { controller: 'name', method: 'name', policies: [] }
+  '/user/bam': { controller: 'user', method: 'doSomething', policies: ['authenticated','somepolicy'] }
 };
