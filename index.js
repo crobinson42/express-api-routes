@@ -61,13 +61,26 @@ class ExpressApiRoutes {
     if (process.NODE_ENV === 'production') { return }
 
     const self = this;
+    let filesToWatch = []
 
-    nodeWatch([
-        this.config.policiesDir,
-        this.config.controllersDir,
-        path.join(this.config.rootDir,'config','routes.js')
-      ],
-      function(filename) {
+    if (this.config.policiesDir) {
+      filesToWatch.push(this.config.policiesDir)
+    }
+    if (this.config.controllersDir) {
+      filesToWatch.push(this.config.controllersDir)
+    }
+    if (this.config.routes) {
+      // attempt a default route dir/file
+      let routesStat
+      try {
+        routesStat = fs.statSync(path.join(this.config.rootDir,'config','routes.js'))
+      } catch(e) {}
+      if (routesStat && routesStat.isDirectory()) {
+        filesToWatch.push(path.join(this.config.rootDir,'config','routes.js'))
+      }
+    }
+
+    nodeWatch(filesToWatch, function(filename) {
         console.log('+++ ExpressApiRoutes - file has changed:');
         console.log(`   ${filename}`);
         console.log('+++ Reloading routes...');
