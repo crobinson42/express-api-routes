@@ -5,7 +5,6 @@ const app = express();
 const Router = express.Router();
 const fs = require('fs');
 const path = require('path');
-const expressRoutes = require('express-list-endpoints');
 const Controllers = require('./lib/Controllers');
 const Policies = require('./lib/Policies');
 const Routes = require('./lib/Routes');
@@ -60,9 +59,5 @@ class ExpressApiRoutes {
 //   // global: myGlobalAppObj // none specified by default
 // });
 // app.listen(3002)
-
-// This does not correctly parse the baseRoute
-// https://github.com/AlbertoFdzM/express-list-endpoints/issues/10
-// console.log(expressRoutes(ourApp));
 
 module.exports = ExpressApiRoutes;
