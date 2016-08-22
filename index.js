@@ -8,6 +8,7 @@ const path = require('path');
 const Controllers = require('./lib/Controllers');
 const Policies = require('./lib/Policies');
 const Routes = require('./lib/Routes');
+const nodeWatch = require('node-watch');
 
 
 class ExpressApiRoutes {
@@ -25,6 +26,15 @@ class ExpressApiRoutes {
     this.config.global = setup.global || false;
     this.config.routeMap = [] // for debug/loggging only
 
+    // make routes!
+    this.doWork()
+
+    this.watchForFileChange()
+
+    return this.config.app;
+  }
+
+  doWork() {
     // setup controllers
     new Controllers(this.config);
     // setip policies
@@ -43,8 +53,24 @@ class ExpressApiRoutes {
     this.config.routeMap.forEach(r=>{ console.log(`  ${this.config.baseRoute}${r}`) })
     console.log('\n');
 
+  }
 
-    return this.config.app;
+  watchForFileChange() {
+    if (process.NODE_ENV === 'production') { return }
+
+    const self = this;
+
+    nodeWatch([
+        this.config.policiesDir,
+        this.config.controllersDir,
+        path.join(this.config.rootDir,'config','routes.js')
+      ],
+      function(filename) {
+        console.log('+++ ExpressApiRoutes - file has changed:');
+        console.log(`   ${filename}`);
+        console.log('+++ Reloading routes...');
+        self.doWork();
+    });
   }
 
 }
