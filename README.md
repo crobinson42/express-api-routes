@@ -1,39 +1,96 @@
-### Express.js Server Auto Routing
+# Express.js Server Auto Routing
 
-This module is designed to be used in a Node.js Express.js server. It allows a
-directory structure:
+This module is designed to be used in a Node.js Express.js server. It allows you
+to build routes/endpoints by simply declaring functions (in your controller files).
+All functions in the `controllers/myPath.js` will be available at the endpoint
+`/myPath/{functionName}` - they are automatically bound to the `express` app
+`router`.
+It also allows you to define policy "middleware" that is processed before the
+request gets to your endpoint.
+
+
+TL;DR
+======
+
 
 ```
 - controllers/
   - user.js
-  - messages.js
 - policies/
   - loggedIn.js
-  - isAdmin.js
+- config/
+  - routes.js
 - package.json
 - app.js
 ```
 
-Where your app is typically started/lifted in `/app.js` you would require this
-module and instantiate it with your config options.
-
-### TL;DR
-
-/app.js
+`/app.js`
 ```
 const app = require('express')();
 const expressApiRoutes = require('expressApiRoutes');
 
-var myGlobalAppObj = {};
-
 // initialize with a config file
 expressApiRoutes({
-  root: __dirname, // defaults to process.mainFile.filename dir
-  baseRoute: 'api', // defaults to '/'
-  controllers: __dirname + "/controllers", // default @param absolute
-  policies: __dirname + "/policies", // default @param absolute
-  config: require('./config/routes'), // default
+
+  // Root directory
+  root: __dirname, // defaults to process.mainModule.filename.dir
+
+  // Base route {optional}
+  baseRoute: '/api', // defaults to '/'
+
+  // Controllers directory {required} absolute path to controllers dir
+  controllers: __dirname + "/controllers", // default if none provided
+
+  // Policies directory {optional} absolute path to policies dir
+  policies: __dirname + "/policies", // default if none provided
+
+  // Routes Config Object {optional}
+  routes: require('./config/routes'),
+
+  // Express instance {optional}
   app: app, // creates an express app if none provided
-  global: myGlobalAppObj // none specified by default
+
 });
+
+app.listen(3000);
 ```
+
+`/controllers/user.js`
+```
+module.exports = {
+  index(req,res,next) {
+    // localhost:3000/api/user
+    return res.send('Woohoo!');
+  },
+  someOtherAction(req,res,next) {
+    // localhost:3000/api/user/someOtherAction
+    return res.send('action, bam!');
+  }.
+  getUsers(req,res,next) {
+    // do some database work...
+    return res.send('Send users list!');
+  }
+};
+```
+
+`/policies/loggedIn.js`
+```
+module.exports = (req,res,next) => {
+  console.log('Policy checking login credentials');
+  next();
+};
+```
+
+`/config/routes.js`
+```
+module.exports = {
+  '/users/list': {
+    controller: 'user',
+    method: 'getUsers',
+    policies: ['loggedIn']
+  }
+};
+```
+
+**Now going to your browser `localhost:3000/api/users/list` will run the
+function `getUsers()` from the controller file `/controllers/user.js`**
