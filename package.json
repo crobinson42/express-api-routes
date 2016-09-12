@@ -1,11 +1,11 @@
 {
   "name": "express-api-routes",
-  "version": "1.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Cory Robinson <coryrobinson42@gmail.com> (http://github.com/crobinson42)",
   "license": "ISC",
@@ -14,6 +14,11 @@
     "node-watch": "^0.4.0"
   },
   "devDependencies": {
-    "express-list-endpoints": "2.0.x"
+    "express-list-endpoints": "2.0.x",
+    "semantic-release": "^4.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crobinson42/express-api-routes.git"
   }
 }
