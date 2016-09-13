@@ -33,14 +33,14 @@ class ExpressApiRoutes {
   }
 
   ensureLogger (logger) {
-    if (logger && (logger instanceof winston.Logger)) {
+    if (logger && logger.info) {
       return logger
     }
 
     return new (winston.Logger)({
       transports: [
         new (winston.transports.Console)({
-          color: true,
+          colorize: true,
           level: 'silly'
         })
       ]
