@@ -60,9 +60,9 @@ class ExpressApiRoutes {
     // make the express app use the Router
     this.config.app.use(this.config.baseRoute, this.config.router)
 
-    console.log(`Controllers:`, this.config.controllers)
-    console.log(`Policies:`, this.config.policies)
-    console.log(`Routes:`, this.config.routes)
+    // console.log(`Controllers:`, this.config.controllers)
+    // console.log(`Policies:`, this.config.policies)
+    // console.log(`Routes:`, this.config.routes)
     this.config.logger.info('routes setup')
     this.config.routeMap.forEach(r => {
       this.config.logger.info(`   ${r}`)
