@@ -70,7 +70,7 @@ const api = new expressApiRoutes({
 
 });
 
-console.log(api); // { controllers: {..}, policies: {..}, routesMap: [..] }
+console.log(api); // { app: app, controllers: {..}, policies: {..}, routesMap: [..] }
 
 app.listen(3000);
 ```
