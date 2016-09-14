@@ -23,13 +23,17 @@ class ExpressApiRoutes {
     this.config.routes = setup.routes || {}
     this.config.app = setup.app || app
     this.config.router = Router
-    this.config.global = setup.global || false
     this.config.routeMap = [] // for debug/loggging only
 
     // make routes!
     this.doWork()
 
-    return this.config.app
+    return {
+      app: this.config.app,
+      controllers: this.config.controllers,
+      policies: this.config.policies,
+      routeMap: this.config.routeMap
+    }
   }
 
   ensureLogger (logger) {

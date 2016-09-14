@@ -45,7 +45,7 @@ const app = require('express')();
 const expressApiRoutes = require('expressApiRoutes');
 
 // initialize with a config file
-new expressApiRoutes({
+const api = new expressApiRoutes({
 
   // Logger (winston instance) {optional}
   logger: new winston.Logger,
@@ -69,6 +69,8 @@ new expressApiRoutes({
   app: app, // creates an express app if none provided
 
 });
+
+console.log(api); // { controllers: {..}, policies: {..}, routesMap: [..] }
 
 app.listen(3000);
 ```
