@@ -69,7 +69,13 @@ class ExpressApiRoutes {
     // console.log(`Routes:`, this.config.routes)
     this.config.logger.info('routes setup')
     this.config.routeMap.forEach(r => {
-      this.config.logger.info(`   ${r}`)
+      let base
+
+      if (this.config.baseRoute !== '/') {
+        base = this.config.baseRoute
+      }
+
+      this.config.logger.info(`   ${base}${r}`)
     })
   }
 }
